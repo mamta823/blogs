@@ -1,47 +1,75 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import Services from '../services';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Createpost = () => {
+
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        reset,
+        formState: { errors, isSubmitSuccessful },
     } = useForm();
-    const handleCreatePost = async (data) => {
+
+
+    React.useEffect(() => {
+        console.log(isSubmitSuccessful, "isSubmitSuccessful")
+        if (isSubmitSuccessful) {
+            reset();
+        }
+    }, [isSubmitSuccessful]);
+
+    const onSubmit = async (data) => {
         console.log(data, "data on submit")
         const response = await Services.createPost(data)
         console.log(response, "created successfully")
+        if (response) {
+            toast.success('Post added successfully!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+
+        }
+
     }
     return (
         <>
-            <form className="form-style-9" onSubmit={handleSubmit(handleCreatePost)}>
+            <ToastContainer />
+            <form className="form-style-9" onSubmit={handleSubmit(onSubmit)}>
                 <ul>
                     <li>
                         <input {...register('name', { required: true })}
                             type="text"
                             name="name"
-                            className="field-style field-split align-left"
+                            className="field-style field-full align-left"
                             placeholder="Name" />
-                        {errors.name && <div style={{ color: "red", textAlign: "left" }}> Name is required.</div>}
-                        <input
-                            {...register('email', { required: true })}
-                            type="email" name="email" className="field-style field-split align-right" placeholder="Email" />
-                        {errors.email && <p style={{ color: "red", textAlign: "left" }}> Email is required.</p>}
-                    </li>
+                        {errors.name && <p style={{ color: "red", textAlign: "left" }}> Name is required.</p>}
 
+                    </li>
+                    <li> <input
+                        {...register('email', { required: true })}
+                        type="email" name="email" className="field-style field-full align-right" placeholder="Email" />
+                        {errors.email && <p style={{ color: "red", textAlign: "left" }}> Email is required.</p>}</li>
+                    <li>
+                        <input
+                            {...register('image', { required: true })}
+                            type="text" name="image" className="field-style field-full align-none" placeholder="Paste image url here" />
+                        {errors.image && <p style={{ color: "red", textAlign: "left" }}> Image is required.</p>}
+                    </li>
                     <li>
                         <input
                             {...register('title', { required: true })}
                             type="text" name="title" className="field-style field-full align-none" placeholder="Title" />
                         {errors.title && <p style={{ color: "red", textAlign: "left" }}> Title is required.</p>}
                     </li>
-                    <li>
-                        <input
-                            {...register('id', { required: true })}
-                            type="text" name="id" className="field-style field-full align-none" placeholder="Id" />
-                        {errors.id && <p style={{ color: "red", textAlign: "left" }}> Id is required.</p>}
-                    </li >
                     <li>
                         <textarea
                             {...register('description', { required: true })}
@@ -53,6 +81,7 @@ const Createpost = () => {
                     </li>
                 </ul >
             </form >
+
         </>
     )
 }

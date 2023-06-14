@@ -5,6 +5,7 @@ import capitalizeFirstLetter from '../utils/capitalizeFirstLetter'
 import ContentLoaderr from './ContentLoader'
 import "./index.css"
 import Loader from './Spinner'
+
 const Allposts = () => {
     const [postdata, setPostdata] = useState()
     const [loading, setLoading] = useState(false)
@@ -30,6 +31,7 @@ const Allposts = () => {
         console.log(data, postdata.length, "post-----")
         if (data > postdata.length) {
             setShow(false)
+            setLoading(false)
         } else {
             setShow(true)
         }
@@ -48,7 +50,7 @@ const Allposts = () => {
                                     <Link to={`/detail/${data?.id}`}>
                                         <div className="card-content">
                                             <div className="card-img">
-                                                <img src="https://placeimg.com/380/230/nature" loading="lazy" alt="" />
+                                                <img src={data.image} loading="lazy" alt="" />
                                             </div>
                                             <div className="card-desc">
                                                 <h3 className='title-color'>{capitalizeFirstLetter(data?.title)}</h3>
@@ -58,8 +60,9 @@ const Allposts = () => {
                                         </div>
                                     </Link>
                                 </div>
-                            )}
-                        {show &&
+                            )
+                        }
+                        {!loading && show &&
                             <div> <button className="loadmorebutton" onClick={() => handleLoadMore()} style={{ cursor: "pointer" }}>Loadmore</button></div>
                         }
                     </div>
