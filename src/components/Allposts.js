@@ -14,6 +14,7 @@ const Allposts = () => {
     const handlePosts = async () => {
         setLoading(true)
         const response = await Services.getPosts()
+        console.log(response, "allposts")
         if (response) {
             setLoading(false)
             setPostdata(response.data)
@@ -26,7 +27,8 @@ const Allposts = () => {
     }, [])
     const handleLoadMore = () => {
         setData((prev) => prev + 9)
-        if (data >= postdata.length) {
+        console.log(data, postdata.length, "post-----")
+        if (data > postdata.length) {
             setShow(false)
         } else {
             setShow(true)
@@ -50,7 +52,7 @@ const Allposts = () => {
                                             </div>
                                             <div className="card-desc">
                                                 <h3 className='title-color'>{capitalizeFirstLetter(data?.title)}</h3>
-                                                <p>{capitalizeFirstLetter(data?.body)}</p>
+                                                <p>{capitalizeFirstLetter(data?.description)}</p>
                                                 <button className="btn-card me-2"> Read </button>
                                             </div>
                                         </div>

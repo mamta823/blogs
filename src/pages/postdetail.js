@@ -20,7 +20,7 @@ const Postdetail = () => {
     }
     useEffect(() => {
         handlePostDetail()
-        handleComments()
+        // handleComments()
     }, [id])
     //fun to get comments on post
     const handleComments = async () => {
@@ -46,7 +46,7 @@ const Postdetail = () => {
                             </div>
                             <div className="content-container">
                                 <h2 className="title-color">{capitalizeFirstLetter(detail?.title)}</h2>
-                                <p>{capitalizeFirstLetter(detail?.body)}</p>
+                                <p>{capitalizeFirstLetter(detail?.description)}</p>
                             </div>
                         </div>
 

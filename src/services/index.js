@@ -1,5 +1,5 @@
-import { getPosts, getSinglepost, getCommentOnPost } from "./service"
+import { getPosts, getSinglepost, getCommentOnPost, createPost } from "./service"
 const Services = {
-    getPosts, getSinglepost, getCommentOnPost
+    getPosts, getSinglepost, getCommentOnPost, createPost
 }
 export default Services
