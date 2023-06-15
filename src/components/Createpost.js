@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import Services from '../services';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const Createpost = () => {
 
@@ -10,12 +13,13 @@ const Createpost = () => {
         register,
         handleSubmit,
         reset,
+        setValue,
+        watch,
         formState: { errors, isSubmitSuccessful },
     } = useForm();
 
-
+    //state for reset formdata after submission below:||
     React.useEffect(() => {
-        console.log(isSubmitSuccessful, "isSubmitSuccessful")
         if (isSubmitSuccessful) {
             reset();
         }
@@ -40,8 +44,19 @@ const Createpost = () => {
         }
 
     }
+    const onEditorStateChange = (editorState) => {
+        setValue("description", editorState);
+    };
+
+    useEffect(() => {
+        register("description", { required: true, minLength: 11 });
+    }, [register]);
+
+    const editorContent = watch("description");
+
     return (
         <>
+
             <ToastContainer />
             <form className="form-style-9" onSubmit={handleSubmit(onSubmit)}>
                 <ul>
@@ -71,10 +86,17 @@ const Createpost = () => {
                         {errors.title && <p style={{ color: "red", textAlign: "left" }}> Title is required.</p>}
                     </li>
                     <li>
-                        <textarea
-                            {...register('description', { required: true })}
-                            name="description" className="field-style" placeholder="Description"></textarea>
+                        <ReactQuill
+                            theme="snow"
+                            value={editorContent}
+                            onChange={onEditorStateChange}
+                            className="field-style"
+                        />
                         {errors.description && <p style={{ color: "red", textAlign: "left" }}> Description is required.</p>}
+                        {/* <textarea
+                                {...register('description', { required: true })}
+                                name="description" className="field-style" placeholder="Description"></textarea>
+                            {errors.description && <p style={{ color: "red", textAlign: "left" }}> Description is required.</p>} */}
                     </li>
                     <li>
                         <input type="submit" value="Submit" />

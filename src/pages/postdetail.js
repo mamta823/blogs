@@ -33,14 +33,25 @@ const Postdetail = () => {
                             </div>
                             <div className="content-container">
                                 <h2 className="title-color">{capitalizeFirstLetter(detail?.title)}</h2>
-                                <p>{capitalizeFirstLetter(detail?.description)}</p>
+                                <p dangerouslySetInnerHTML={{
+                                    __html: capitalizeFirstLetter(detail?.post)
+                                }}></p>
                             </div>
                         </div>
 
                     }
+
                 </div>
             </div>
+            <div className='container'>
+                <div className='row'>
+                    <div className="description-container mt-5" dangerouslySetInnerHTML={{
+                        __html: capitalizeFirstLetter((detail?.description))
 
+                    }} >
+                    </div>
+                </div>
+            </div>
             {/*comment listing below  */}
             <div className="container d-flex justify-content-center mt-100 mb-100">
                 <div className="row">
