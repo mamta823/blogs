@@ -1,3 +1,11 @@
+button.btn.btn-success {
+    padding: 5px 23px;
+    background: #1ABC9C;
+    border: none;
+    font-size: 21px;
+    font-weight: 900;
+}
+
 .active {
     background-color: turquoise;
     color: white!important;
@@ -97,7 +105,7 @@ textarea#comment {
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-height: 120px;
+    min-height: 48px;
 }
 .btn-card{
 	background-color: #1ABC9C;
@@ -250,3 +258,4 @@ button.loadmorebutton {
 	background: linear-gradient(to bottom, #2D77A2 5%, #337DA8 100%);
 	background-color: #28739E;
 }
+

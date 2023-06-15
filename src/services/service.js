@@ -12,5 +12,11 @@ const getCommentOnPost = async (payloaddata, id) => {
 const createPost = async (payloaddata) => {
     return await axiosFile.post(`/detail`, payloaddata)
 }
-export { getPosts, getSinglepost, getCommentOnPost, createPost }
+const deletePost = async (id) => {
+    return await axiosFile.delete(`/detail/${id}`)
+}
+const editPost = async (id, payloaddata) => {
+    return await axiosFile.put(`/detail/${id}`, payloaddata)
+}
+export { getPosts, getSinglepost, getCommentOnPost, createPost, deletePost, editPost }
 
