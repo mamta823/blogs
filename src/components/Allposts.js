@@ -15,7 +15,6 @@ const Allposts = () => {
     const handlePosts = async () => {
         setLoading(true)
         const response = await Services.getPosts()
-        console.log(response, "allposts")
         if (response) {
             setLoading(false)
             setPostdata(response.data)
@@ -28,7 +27,6 @@ const Allposts = () => {
     }, [])
     const handleLoadMore = () => {
         setData((prev) => prev + 9)
-        console.log(data, postdata.length, "post-----")
         if (data > postdata.length) {
             setShow(false)
             setLoading(false)
@@ -62,7 +60,7 @@ const Allposts = () => {
                                 </div>
                             )
                         }
-                        {!loading && show &&
+                        {!loading && show && postdata?.length > 4 &&
                             <div> <button className="loadmorebutton" onClick={() => handleLoadMore()} style={{ cursor: "pointer" }}>Loadmore</button></div>
                         }
                     </div>
