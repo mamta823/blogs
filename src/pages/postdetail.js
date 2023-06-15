@@ -44,8 +44,9 @@ const Postdetail = () => {
                 </div>
             </div>
             <div className='container'>
-                <div className='row'>
-                    <div className="description-container mt-5" dangerouslySetInnerHTML={{
+                <div className='row mt-5'>
+                    <h2>Post description</h2>
+                    <div className="description-container " dangerouslySetInnerHTML={{
                         __html: capitalizeFirstLetter((detail?.description))
 
                     }} >

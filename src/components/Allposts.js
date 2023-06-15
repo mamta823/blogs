@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Services from '../services'
 import capitalizeFirstLetter from '../utils/capitalizeFirstLetter'
-import ContentLoaderr from './ContentLoader'
 import "./index.css"
 import Loader from './Spinner'
 
@@ -10,7 +9,6 @@ const Allposts = () => {
     const [postdata, setPostdata] = useState()
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState(9)
-    const [show, setShow] = useState(true)
     //arrow function to list all posts
     const handlePosts = async () => {
         setLoading(true)
@@ -25,16 +23,10 @@ const Allposts = () => {
     useEffect(() => {
         handlePosts()
     }, [])
+    console.log(data, postdata?.length, "datalength")
     const handleLoadMore = () => {
-        setData((prev) => prev + 9)
-        if (data > postdata.length) {
-            setShow(false)
-            setLoading(false)
-        } else {
-            setShow(true)
-        }
-    }
-
+        setData((prev) => prev + 9);
+    };
     return (
         <>
             <section className="details-card">
@@ -63,7 +55,7 @@ const Allposts = () => {
                                 </div>
                             )
                         }
-                        {!loading && show && postdata?.length > 4 &&
+                        {data <= postdata?.length && postdata?.length > 8 &&
                             <div> <button className="loadmorebutton" onClick={() => handleLoadMore()} style={{ cursor: "pointer" }}>Loadmore</button></div>
                         }
                     </div>
