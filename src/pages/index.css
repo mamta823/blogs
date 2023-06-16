@@ -1,3 +1,8 @@
+
+.row.mt-5.container-size {
+    word-wrap: break-word;
+    text-align: left;
+}
 .image-container img {
     border-radius: 12px;
     height: 100%;

@@ -5,7 +5,6 @@ import "../pages/index.css"
 import capitalizeFirstLetter from '../utils/capitalizeFirstLetter'
 import Loader from '../components/Spinner'
 import Commentbox from '../components/Commentbox'
-import Modalforeditpost from '../components/Modal'
 const Postdetail = () => {
     const [detail, setDetail] = useState()
     // const [loading, setLoading] = useState(false)
@@ -25,10 +24,9 @@ const Postdetail = () => {
 
     return (
         <>
-
+            {/* {loading ? <Loader /> : */}
             <div className="container">
                 <div className="row d-flex align-items-center">
-                    {/* {loading ? <Loader /> : */}
                     <div className="blog-post mt-5">
                         <div className="image-container">
                             <img src={detail?.image} alt="" />
@@ -42,10 +40,7 @@ const Postdetail = () => {
                     </div>
                     {/* } */}
                 </div>
-
-
-
-                <div className='row mt-5'>
+                <div className='row mt-5 container-size'>
                     <h2>Post description</h2>
                     <div className="description-container " dangerouslySetInnerHTML={{
                         __html: capitalizeFirstLetter((detail?.description))
@@ -55,15 +50,20 @@ const Postdetail = () => {
                 </div>
 
             </div>
-
+            {/* } */}
             {/*comment listing below  */}
             <div className="container d-flex justify-content-center mt-100 mb-100">
                 <div className="row">
-                    <Commentbox
-                        id={detail?.id}
-                        comment={detail?.comment}
-                        handlecomment={handlePostDetail}
-                    />
+                    {detail?.comment &&
+                        <Commentbox
+                            id={detail?.id}
+                            comment={detail?.comment}
+                            handlecomment={handlePostDetail}
+                        // setLoading={setLoading}
+                        // loading={loading}
+                        />
+
+                    }
 
 
                     {/* {!loading && */}

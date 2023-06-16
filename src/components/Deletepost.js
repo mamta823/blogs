@@ -9,7 +9,6 @@ function Deletepost(props) {
         const response = await Services.deletePost(props.idforedit)
         if (response) {
             props.setShowdeletemodal(false)
-            props.handlePosts()
             toast.success('Post deleted successfully!', {
                 position: "top-right",
                 autoClose: 5000,
@@ -20,6 +19,7 @@ function Deletepost(props) {
                 progress: undefined,
                 theme: "light",
             });
+            props.handlePosts()
         }
     }
     const handleClose = () => props.setShowdeletemodal(false);

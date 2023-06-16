@@ -87,9 +87,9 @@ const Allposts = () => {
                                                 <h3 className='title-color'>{capitalizeFirstLetter(data?.title)}</h3>
                                                 <p className='title-color'>{capitalizeFirstLetter(data?.shortdescription)}</p>
 
-                                                <p dangerouslySetInnerHTML={{
+                                                <h5 dangerouslySetInnerHTML={{
                                                     __html: capitalizeFirstLetter(data?.post)
-                                                }}></p>
+                                                }}></h5>
                                                 <button className="btn-card me-2"> Read </button>
 
                                             </div>
