@@ -2,8 +2,9 @@ import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import LoaderContext from '../context/LoaderProvider'
 import Services from '../services'
 import capitalizeFirstLetter from '../utils/capitalizeFirstLetter'
 import Deletepost from './Deletepost'
@@ -13,16 +14,17 @@ import Loader from './Spinner'
 
 const Allposts = () => {
     const [postdata, setPostdata] = useState()
-    // const [sortedddata, setSortedddata] = useState()
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
     const [data, setData] = useState(9)
     const [show, setShow] = useState(false)
     const [showdeletemodal, setShowdeletemodal] = useState(false)
     const [idforedit, setIdforedit] = useState('')
     const [editdata, setEditdata] = useState()
+    const { isLoading, setIsLoading } = useContext(LoaderContext);
+
     // function to list all posts
     const handlePosts = async () => {
-        setLoading(true)
+        setIsLoading(true)
         const response = await Services.getPosts()
         if (response) {
             const sortData = response.data?.sort(function compare(a, b) {
@@ -31,7 +33,7 @@ const Allposts = () => {
                 return moment(dateB).diff(moment(dateA));
             });
             setPostdata(sortData)
-            setLoading(false)
+            setIsLoading(false)
         }
         return response
     }
@@ -52,24 +54,14 @@ const Allposts = () => {
     }
 
     // func for edit post:
-    const handleEditPost = async (id) => {
+    const handleEditPost = async (data, id) => {
         setIdforedit(id)
+        setEditdata(data)
         setShow(true)
     }
-    const handlePostDetail = async () => {
-        const detailResponse = await Services.getSinglepost(idforedit)
-        if (detailResponse) {
-            setEditdata(detailResponse?.data)
-
-        }
-        return detailResponse
-    }
-    useEffect(() => {
-        handlePostDetail()
-    }, [idforedit])
     return (
         <>
-
+            {/* <Loader /> */}
             <section className="details-card">
                 <div className="container">
                     <div className="row">
@@ -89,8 +81,10 @@ const Allposts = () => {
                             idforedit={idforedit}
                             handlePosts={handlePosts}
                         />
-                        {loading ? <Loader /> :
-                            postdata && postdata?.slice(0, data).map((data, index) =>
+
+                        {
+
+                            postdata?.slice(0, data).map((data, index) =>
                                 // loading ? <ContentLoaderr />
                                 <div key={index} className="col-md-4 mt-3 card-decor">
 
@@ -111,20 +105,17 @@ const Allposts = () => {
                                             </div>
                                         </Link>
                                         <div className="d-flex">
-                                            <p className="m-0 px-3">{moment(data?.createdAt).format('LL')}</p>
+                                            <p className="m-0 px-3" style={{ color: "#747373" }}>{moment(data?.createdAt).format('LL')}</p>
                                             <p className="m-auto" style={{ cursor: "pointer" }} onClick={() => handleDeletePost(data?.id)}>  <FontAwesomeIcon icon={faTrash} /></p>
-                                            <p className="m-auto" style={{ cursor: "pointer" }} onClick={() => { handleEditPost(data?.id) }}> <FontAwesomeIcon icon={faPenToSquare} /></p>
-
+                                            <p className="m-auto" style={{ cursor: "pointer" }} onClick={() => { handleEditPost(data, data.id) }}> <FontAwesomeIcon icon={faPenToSquare} /></p>
                                         </div>
-
-
                                     </div>
-
-
                                 </div>
 
                             )
                         }
+                        {/* </Loader> */}
+
                         {data <= postdata?.length && postdata?.length > 8 &&
                             <div> <button className="loadmorebutton" onClick={() => handleLoadMore()} style={{ cursor: "pointer" }}>Loadmore</button></div>
                         }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Services from '../services';
@@ -8,11 +8,12 @@ import "../components/index.css"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router';
+import LoaderContext from '../context/LoaderProvider';
 
 
 
 function Modalforeditpost(props) {
+    const { isLoading, setIsLoading } = useContext(LoaderContext);
     const handleClose = () => props.setShow(false);
     const {
         register,
@@ -24,6 +25,7 @@ function Modalforeditpost(props) {
     } = useForm();
     //state for reset formdata after submission below:||
     React.useEffect(() => {
+
         if (isSubmitSuccessful) {
             reset();
             props.setShow(false)
@@ -32,10 +34,10 @@ function Modalforeditpost(props) {
     }, [isSubmitSuccessful]);
 
     const onSubmit = async (data) => {
-        console.log(data, "data on submit")
+        setIsLoading(true)
         const response = await Services.editPost(props.idforedit, data)
-        console.log(response, "edit successfully")
         if (response) {
+            setIsLoading(false)
             toast.success('Post updated successfully!', {
                 position: "top-right",
                 autoClose: 5000,
@@ -60,11 +62,6 @@ function Modalforeditpost(props) {
 
     const editorContent = watch("description");
 
-
-    // const handlePostDetail = async () => {
-
-
-    // }
     useEffect(() => {
         setValue('title', props.editdata?.title,)
         setValue('shortdescription', props.editdata?.shortdescription)

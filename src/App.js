@@ -7,17 +7,27 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Postdetail from './pages/postdetail';
 import Navbar from './components/navbar';
 import Formforpost from './pages/formforpost';
-function App() {
-  return (
-    <div className="App">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/detail/:id" element={<Postdetail />} />
-        <Route path="/formforpost" element={<Formforpost />} />
+import Loader from './components/Spinner';
+import { useContext, useEffect, useState } from 'react';
+import LoaderContext from './context/LoaderProvider';
 
-      </Routes>
-    </div>
+function App() {
+  const { isLoading } = useContext(LoaderContext);
+  console.log(isLoading, "isLoading")
+  return (
+    <Loader loading={isLoading} >
+      <div style={{ height: '100vh' }}>
+
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/detail/:id" element={<Postdetail />} />
+          <Route path="/formforpost" element={<Formforpost />} />
+
+        </Routes>
+
+      </div>
+    </Loader >
   );
 }
 

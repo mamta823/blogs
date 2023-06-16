@@ -1,13 +1,18 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { toast, ToastContainer } from 'react-toastify';
+import LoaderContext from '../context/LoaderProvider';
 import Services from '../services';
 
 function Deletepost(props) {
+    const { isLoading, setIsLoading } = useContext(LoaderContext);
     const delteposthandler = async () => {
+        setIsLoading(true)
         const response = await Services.deletePost(props.idforedit)
+
         if (response) {
+            setIsLoading(false)
             props.setShowdeletemodal(false)
             toast.success('Post deleted successfully!', {
                 position: "top-right",

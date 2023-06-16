@@ -1,9 +1,19 @@
-import Spinner from 'react-bootstrap/Spinner';
-function Loader() {
+import { useState } from 'react';
+import LoadingOverlay from 'react-loading-overlay'
+import BounceLoader from 'react-spinners/BounceLoader'
+
+function Loader({ loading, children }) {
+
     return (
-        <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-        </Spinner>
+
+        <LoadingOverlay
+            active={loading}
+            spinner
+            text='Loading your content...'
+        >
+            {children}
+        </LoadingOverlay>
+
     );
 }
 

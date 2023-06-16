@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Services from '../services'
 import "../pages/index.css"
 import capitalizeFirstLetter from '../utils/capitalizeFirstLetter'
 import Loader from '../components/Spinner'
 import Commentbox from '../components/Commentbox'
+import LoaderContext from '../context/LoaderProvider'
 const Postdetail = () => {
     const [detail, setDetail] = useState()
-    // const [loading, setLoading] = useState(false)
+    const { isLoading, setIsLoading } = useContext(LoaderContext);
     const { id } = useParams()
     const handlePostDetail = async () => {
-        // setLoading(true)
+        setIsLoading(true)
         const detailResponse = await Services.getSinglepost(id)
         if (detailResponse) {
             setDetail(detailResponse?.data)
-            // setLoading(false)
+            setIsLoading(false)
         }
         return detailResponse
     }
@@ -24,7 +25,7 @@ const Postdetail = () => {
 
     return (
         <>
-            {/* {loading ? <Loader /> : */}
+
             <div className="container">
                 <div className="row d-flex align-items-center">
                     <div className="blog-post mt-5">
@@ -38,7 +39,7 @@ const Postdetail = () => {
                             }}></p>
                         </div>
                     </div>
-                    {/* } */}
+
                 </div>
                 <div className='row mt-5 container-size'>
                     <h2>Post description</h2>
@@ -50,7 +51,7 @@ const Postdetail = () => {
                 </div>
 
             </div>
-            {/* } */}
+
             {/*comment listing below  */}
             <div className="container d-flex justify-content-center mt-100 mb-100">
                 <div className="row">
