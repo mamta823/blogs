@@ -10,7 +10,7 @@ const getCommentOnPost = async (payloaddata, id) => {
     return await axiosFile.put(`/detail/${id}`, payloaddata)
 }
 const createPost = async (payloaddata) => {
-    return await axiosFile.post(`/detail`, payloaddata)
+    return await axiosFile.post(`/detail`, payloaddata,)
 }
 const deletePost = async (id) => {
     return await axiosFile.delete(`/detail/${id}`)

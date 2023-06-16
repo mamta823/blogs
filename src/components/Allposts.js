@@ -1,6 +1,7 @@
 import { faPenToSquare } from '@fortawesome/free-regular-svg-icons'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Services from '../services'
@@ -12,6 +13,7 @@ import Loader from './Spinner'
 
 const Allposts = () => {
     const [postdata, setPostdata] = useState()
+    // const [sortedddata, setSortedddata] = useState()
     const [loading, setLoading] = useState(false)
     const [data, setData] = useState(9)
     const [show, setShow] = useState(false)
@@ -23,12 +25,16 @@ const Allposts = () => {
         setLoading(true)
         const response = await Services.getPosts()
         if (response) {
+            const sortData = response.data?.sort(function compare(a, b) {
+                var dateA = a.createdAt;
+                var dateB = b.createdAt;
+                return moment(dateB).diff(moment(dateA));
+            });
+            setPostdata(sortData)
             setLoading(false)
-            setPostdata(response.data)
         }
         return response
     }
-
     useEffect(() => {
         handlePosts()
     }, [])
@@ -42,14 +48,12 @@ const Allposts = () => {
     // func for delete post:
     const handleDeletePost = async (id) => {
         setIdforedit(id)
-        console.log(id, "Deletepsot")
         setShowdeletemodal(true)
     }
 
     // func for edit post:
     const handleEditPost = async (id) => {
         setIdforedit(id)
-        console.log(id, "editPost")
         setShow(true)
     }
     const handlePostDetail = async () => {
@@ -107,6 +111,7 @@ const Allposts = () => {
                                             </div>
                                         </Link>
                                         <div className="d-flex">
+                                            <p className="m-0 px-3">{moment(data?.createdAt).format('LL')}</p>
                                             <p className="m-auto" style={{ cursor: "pointer" }} onClick={() => handleDeletePost(data?.id)}>  <FontAwesomeIcon icon={faTrash} /></p>
                                             <p className="m-auto" style={{ cursor: "pointer" }} onClick={() => { handleEditPost(data?.id) }}> <FontAwesomeIcon icon={faPenToSquare} /></p>
 

@@ -13,7 +13,6 @@ import { useParams } from 'react-router';
 
 
 function Modalforeditpost(props) {
-    console.log(props.editdata, "editdata")
     const handleClose = () => props.setShow(false);
     const {
         register,

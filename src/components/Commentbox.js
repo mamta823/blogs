@@ -12,7 +12,6 @@ const Commentbox = (props) => {
         formState: { errors, isSubmitSuccessful },
     } = useForm();
     React.useEffect(() => {
-        console.log(isSubmitSuccessful, "isSubmitSuccessful")
         if (isSubmitSuccessful) {
             reset();
             props.handlecomment()

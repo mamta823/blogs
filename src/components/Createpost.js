@@ -6,9 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import "../components/index.css"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import moment from 'moment';
 
 const Createpost = () => {
-
     const {
         register,
         handleSubmit,
@@ -27,7 +27,9 @@ const Createpost = () => {
 
     const onSubmit = async (data) => {
         console.log(data, "data on submit")
-        const response = await Services.createPost(data)
+        const payload = { ...data, createdAt: moment().format() }
+        const response = await Services.createPost(payload
+        )
         if (response) {
             toast.success('Post added successfully!', {
                 position: "top-right",
