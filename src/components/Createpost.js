@@ -57,6 +57,9 @@ const Createpost = () => {
         <>
 
             <ToastContainer />
+            <div className="container">
+                <h1 className="title-posts">Add new post here</h1>
+            </div>
             <form className="form-style-9" onSubmit={handleSubmit(onSubmit)}>
                 <ul>
                     <li>
@@ -84,6 +87,7 @@ const Createpost = () => {
                             value={editorContent}
                             onChange={onEditorStateChange}
                             className="field-style field-full field-size"
+                            placeholder="Description"
                         />
                         {errors.description && <p style={{ color: "red", textAlign: "left" }}> Description is required.</p>}
                         {/* <textarea

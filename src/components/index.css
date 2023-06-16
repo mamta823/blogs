@@ -1,3 +1,8 @@
+
+h1.title-posts {
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    color: #1ABC9C;
+}
 button.btn.btn-success {
     padding: 5px 23px;
     background: #1ABC9C;

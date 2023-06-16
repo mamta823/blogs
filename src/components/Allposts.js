@@ -17,6 +17,7 @@ const Allposts = () => {
     const [show, setShow] = useState(false)
     const [showdeletemodal, setShowdeletemodal] = useState(false)
     const [idforedit, setIdforedit] = useState('')
+    const [editdata, setEditdata] = useState()
     // function to list all posts
     const handlePosts = async () => {
         setLoading(true)
@@ -51,7 +52,17 @@ const Allposts = () => {
         console.log(id, "editPost")
         setShow(true)
     }
+    const handlePostDetail = async () => {
+        const detailResponse = await Services.getSinglepost(idforedit)
+        if (detailResponse) {
+            setEditdata(detailResponse?.data)
 
+        }
+        return detailResponse
+    }
+    useEffect(() => {
+        handlePostDetail()
+    }, [idforedit])
     return (
         <>
 
@@ -65,6 +76,7 @@ const Allposts = () => {
                             idforedit={idforedit}
                             handlePosts={handlePosts}
                             postdata={postdata}
+                            editdata={editdata}
                         />
                         <Deletepost
                             showdeletemodal={showdeletemodal}

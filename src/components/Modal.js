@@ -13,29 +13,16 @@ import { useParams } from 'react-router';
 
 
 function Modalforeditpost(props) {
-    console.log(props.idforedit, "postdatapostdata")
-    const [defaultdata, setDefaultdata] = useState()
+    console.log(props.editdata, "editdata")
     const handleClose = () => props.setShow(false);
-
-
     const {
         register,
         handleSubmit,
         reset,
         setValue,
         watch,
-        defaultValues,
         formState: { errors, isSubmitSuccessful },
-    } = useForm({
-        mode: "onChange",
-        defaultValues: {
-            'title': defaultdata?.title,
-            'shortdescription': defaultdata?.shortdescription,
-            'image': defaultdata?.image,
-            'description': defaultdata?.description
-        }
-    });
-
+    } = useForm();
     //state for reset formdata after submission below:||
     React.useEffect(() => {
         if (isSubmitSuccessful) {
@@ -50,7 +37,7 @@ function Modalforeditpost(props) {
         const response = await Services.editPost(props.idforedit, data)
         console.log(response, "edit successfully")
         if (response) {
-            toast.success('Post added successfully!', {
+            toast.success('Post updated successfully!', {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -75,24 +62,16 @@ function Modalforeditpost(props) {
     const editorContent = watch("description");
 
 
+    // const handlePostDetail = async () => {
 
 
-    // console.log(defaultdata, "defaultdata")
-    const handlePostDetail = async () => {
-        // setLoading(true)
-        const detailResponse = await Services.getSinglepost(props?.idforedit)
-        if (detailResponse) {
-            console.log(detailResponse.data, "det")
-            setDefaultdata(detailResponse.data)
-            // setDetail(detailResponse?.data)
-            // setLoading(false)
-        }
-        return detailResponse
-    }
+    // }
     useEffect(() => {
-        handlePostDetail()
-    }, [props?.idforedit])
-
+        setValue('title', props.editdata?.title,)
+        setValue('shortdescription', props.editdata?.shortdescription)
+        setValue('image', props.editdata?.image)
+        setValue('description', props.editdata?.description)
+    }, [props.editdata])
     return (
         <>
             <Modal
@@ -142,7 +121,6 @@ function Modalforeditpost(props) {
                                 <Button variant="success me-4" onClick={handleClose}>
                                     Close
                                 </Button>
-                                {/* <input type="submit" value="Submit" /> */}
                                 <Button type="submit" variant="success">Edit</Button>
                             </li>
                         </ul >
